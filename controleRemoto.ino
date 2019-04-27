@@ -41,6 +41,8 @@ void loop() {
 }
 
 // LED -  2.94V 0.2mA (min 147 Ohms)
+// https://www.tinkercad.com/things/kEPxAzrswYD-incredible-sango
+// https://www.pjrc.com/teensy/td_libs_IRremote.html
 /*
 
 0 - FD30CF
