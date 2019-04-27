@@ -1,8 +1,13 @@
+/*
+  Author: Vinícius Silva Madureira Pereira.
+  Date: April, 26th, 2019.
+*/
+
 #include <IRremote.h>
 
 byte infravermelho = 12, led = 13, 
 	reles[] = {2, 3, 4, 5};
-bool estados[] = {false, false, false, false};
+bool estados[] = {HIGH, HIGH, HIGH, HIGH};
 IRrecv receptor(infravermelho);
 //IRrecv *receptor = new IRrecv(infravermelho);
 decode_results resultados;
@@ -12,13 +17,15 @@ unsigned long teclas[] = {
   0xFFA857, 0xFF906F
 };
 
+
+
 void setup() {
   receptor.enableIRIn();
   receptor.blink13(true);
-  pinMode(13, OUTPUT);
   Serial.begin(9600);
   for (byte indice = 0; indice < 4; indice++) {
   	pinMode(reles[indice], OUTPUT);
+        digitalWrite(reles[indice], estados[indice]);
   }
 }
 
@@ -29,7 +36,7 @@ void loop() {
     //Serial.println(keys[0], HEX);    
     for (byte indice = 0; indice < 4; indice++) {
       if (resultados.value == teclas[indice]) {
-      	estados[indice] = !estados[indice];
+      	estados[indice] = estados[indice] == HIGH ? LOW : HIGH;
       	digitalWrite(reles[indice], estados[indice]);      
       }
     }
@@ -38,7 +45,7 @@ void loop() {
   // Bluetooth
   if (Serial.available()) {
      byte indice = Serial.readString().toInt();       
-     estados[indice] = !estados[indice];
-      digitalWrite(reles[indice], estados[indice]);      
+     estados[indice] = estados[indice] == HIGH ? LOW : HIGH;
+     digitalWrite(reles[indice], estados[indice]);      
   }
 }
