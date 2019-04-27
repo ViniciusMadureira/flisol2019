@@ -17,8 +17,6 @@ unsigned long teclas[] = {
   0xFFA857, 0xFF906F
 };
 
-
-
 void setup() {
   receptor.enableIRIn();
   receptor.blink13(true);
